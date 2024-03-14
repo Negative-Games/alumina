@@ -32,6 +32,7 @@ import games.negative.alumina.dependency.MavenDependency;
 import games.negative.alumina.dependency.MavenRepository;
 import games.negative.alumina.menu.listener.MenuListener;
 import games.negative.alumina.util.FileLoader;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -41,6 +42,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -52,6 +54,7 @@ import java.util.Map;
 public abstract class AluminaPlugin extends JavaPlugin {
 
     private static AluminaPlugin instance;
+    private Metrics metrics;
 
     /**
      * This method is called when the plugin is initially loaded.
@@ -228,6 +231,8 @@ public abstract class AluminaPlugin extends JavaPlugin {
     public void onLoad() {
         instance = this;
 
+        this.metrics = new Metrics(this, 20987);
+
         load();
     }
 
@@ -245,5 +250,10 @@ public abstract class AluminaPlugin extends JavaPlugin {
 
     public static AluminaPlugin getAluminaInstance() {
         return instance;
+    }
+
+    @NotNull
+    public Metrics metrics() {
+        return metrics;
     }
 }
